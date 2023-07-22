@@ -15,6 +15,10 @@ import bcrypt from 'bcrypt'
         type:String,
         required:true
     },
+    photo: [{
+        type: String,
+  
+    }],
 
  },
  {

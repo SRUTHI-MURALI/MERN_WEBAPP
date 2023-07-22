@@ -13,8 +13,14 @@ const ProfileScreen=()=> {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const [confirmPassword,setConfirmPassword]=useState('')
-
-    
+    const [photo, setPhoto] = useState('');
+    const handleChange=(e)=> {
+        const file=e.target.files[0]
+        if(file){
+            setPhoto(file)
+        }
+    }
+ 
 
     const [updateUser, {isLoading} ]=useUpdateUserMutation()
 
@@ -23,6 +29,7 @@ const ProfileScreen=()=> {
     useEffect(()=>{
         setName(userInfo.name)
         setEmail(userInfo.email)
+        setPhoto(userInfo.photo)
     },[userInfo])
 
     const submitHandler= async(e)=>{
@@ -33,13 +40,13 @@ const ProfileScreen=()=> {
        }else{
             try {
                 
-               const res= await updateUser({
-                _id:userInfo._id,
-                name,
-                email,
-                password
-               }).unwrap()
-              
+                const formData = new FormData();
+                formData.append('_id', userInfo._id);
+                formData.append('name', name);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('photo', photo);
+                const res = await updateUser(formData).unwrap();
               
                toast.success('Profile updated')
             } catch (err) {
@@ -48,9 +55,9 @@ const ProfileScreen=()=> {
        }
     }
   return (
-    <FormContainer>
+    <FormContainer >
         <h1>Update Profile</h1>
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler} encType='multipart/form-data'>
             <Form.Group className='my-2' controlId='name'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control   
@@ -91,6 +98,14 @@ const ProfileScreen=()=> {
                 onChange={(e)=> setConfirmPassword(e.target.value)}
                 ></Form.Control>
             </Form.Group>
+
+           
+             <Form.Group  className="App">
+            <h2>Add Image:</h2>
+            <input type="file" onChange={handleChange} />
+            <img src={photo} />
+            </Form.Group >
+           
             {isLoading && <Loader/>}
            <Button type='submit' variant='primary' className='mt-3'>
                 Update

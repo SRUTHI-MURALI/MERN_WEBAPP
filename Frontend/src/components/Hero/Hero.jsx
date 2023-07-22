@@ -1,7 +1,15 @@
 import { Container, Card, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useSelector } from 'react-redux';
 
 const Hero = () => {
+  const {userInfo} = useSelector((state)=> state.auth)
+
+  {if(userInfo){
+    console.log(userInfo,"jkj")
+
+  }}
+  
   return (
     <div className=' py-5'>
       <Container className='d-flex justify-content-center'>
@@ -26,9 +34,22 @@ const Hero = () => {
             
           </div>
         </Card>
+        {userInfo ? (
+          <>
+          {Array.isArray(userInfo.photo) && userInfo.photo.length > 0 ? (
+              <img src={`server/Backend/uploads/${userInfo.photo[0]}`} alt='kk'/>
+            ) : (
+              <h1>no image</h1>
+            )}
+          </>):(
+            <>
+            <h1>no image</h1>
+            </>
+          )}
       </Container>
     </div>
   );
 };
 
 export default Hero;
+

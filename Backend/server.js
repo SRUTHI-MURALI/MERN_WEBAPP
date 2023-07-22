@@ -6,6 +6,7 @@ import { notFound,errorHandler } from './middleware/errorMiddleware.js'
 dotenv.config()
 const PORT= process.env.PORT || 3000
 import userRoutes from './routes/userRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 
 const app= express()
 connectDB()
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.use('/api/users', userRoutes)
+app.use('/api/admin',adminRoutes)
 app.use(notFound)
 app.use(errorHandler)
 app.use(cookieParser())

@@ -2,7 +2,7 @@ import { apiSlice } from "./ApiSlice";
 const USERS_URL = '/api/users'
 
 let token= localStorage.getItem('token') ?? '';
-console.log(token,'ttttttttttt');
+
 
 if(token){
     token=JSON.parse(token)
