@@ -1,7 +1,7 @@
 import { adminslice } from "./AdminApi";
 const ADMIN_URL = '/api/admin';
 
-console.log('fffff');
+
 
 export const AdminApiSlice = adminslice.injectEndpoints({
   endpoints: (build) => ({
@@ -12,8 +12,21 @@ export const AdminApiSlice = adminslice.injectEndpoints({
         body: data
       }),
     }),
+    getUser: build.mutation({
+      query: () => ({
+        url: `${ADMIN_URL}/userData`, 
+        method: 'GET',
+      
+      }),
+    }),
+    adminlogout:build.mutation({
+      query:()=>({
+          url:`${ADMIN_URL}/adminlogout`,
+          method:'POST',
+      })
+  })
   })
 });
 
 
-export const { useLoginMutation } = AdminApiSlice;
+export const { useLoginMutation,useAdminlogoutMutation,useGetUserMutation } = AdminApiSlice;

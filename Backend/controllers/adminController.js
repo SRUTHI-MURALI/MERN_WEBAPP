@@ -9,8 +9,8 @@ import generateToken from '../utils/generatetoken.js'
 
 const adminLogin= asyncHandler(async (req,res)=>{
     const { email,password}= req.body
-    console.log("haaai");
-    const name="sruthi"
+    
+    const name="jj"
     const id=12345
  if(email==="admin123@gmail.com" && password==="123"){
      console.log('password');
@@ -37,7 +37,9 @@ const adminLogin= asyncHandler(async (req,res)=>{
 //@access private
 
 const getUserData= asyncHandler(async (req,res)=>{
+    console.log("haaai");
     const user = await User.find()
+    console.log(user,'hhhh');
     res.status(200).json(user)
 })
 
@@ -119,12 +121,12 @@ const updateUser= asyncHandler(async (req,res)=>{
 
 const deleteUser=asyncHandler(async(req,res)=>{
     const id=req.params.id;
-    console.log(id,'delete');
+   
     const user = await User.findById(id)
     if(user){
         await User.deleteOne({_id:id})
     }
-    res.status(200).json({message:'deleted'})
+    res.status(200).json({user})
 })
 
  // Logout admin

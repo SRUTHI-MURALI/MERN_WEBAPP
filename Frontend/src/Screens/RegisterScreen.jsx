@@ -34,10 +34,12 @@ const RegisterScreen=()=> {
        }else{
         try {
             const res = await register({ name, email, password }).unwrap();
+            console.log(res.data,"muhzin");
             dispatch(setCredentials({ ...res }));
             navigate('/');
         } catch (error) {
-            toast.error(err?.data?.message || err.message);
+           
+            console.log(error);
         }
        }
     }

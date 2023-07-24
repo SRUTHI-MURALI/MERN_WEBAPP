@@ -10,21 +10,23 @@ const initialState = {
 };
 
 const adminSlice = createSlice({
+  
   name: 'admin',
   initialState,
   reducers: {
     setAdminCredentials: (state, action) => {
       state.adminInfo = action.payload;
       let token = action.payload?.token;
-
+console.log( state.adminInfo ,'vvvvvvvvvv');
       localStorage.setItem('adminInfo', JSON.stringify(action.payload));
-      localStorage.setItem('adminToken', JSON.stringify(token));
+      
     },
     adminLogout: (state, action) => {
       state.adminInfo = null;
       localStorage.removeItem('adminInfo');
-      localStorage.removeItem('adminToken');
+      
     },
+    
   },
 });
 

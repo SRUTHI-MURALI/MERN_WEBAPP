@@ -5,10 +5,6 @@ import { useSelector } from 'react-redux';
 const Hero = () => {
   const {userInfo} = useSelector((state)=> state.auth)
 
-  {if(userInfo){
-    console.log(userInfo,"jkj")
-
-  }}
   
   return (
     <div className=' py-5'>

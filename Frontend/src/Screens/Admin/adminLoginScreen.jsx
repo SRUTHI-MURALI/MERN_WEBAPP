@@ -26,7 +26,7 @@ const AdminLogin=()=> {
             const res = await login({email,password}).unwrap()
             dispatch(setAdminCredentials({...res}))
           
-            navigate('/')
+            navigate('/adminHome')
         } catch (err) {
             toast.error(err?.data?.message || err.message);
         }

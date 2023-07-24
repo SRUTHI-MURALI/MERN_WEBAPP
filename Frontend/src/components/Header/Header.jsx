@@ -1,29 +1,32 @@
-import { Navbar, Nav, Container, NavDropdown,Badge } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
-import { useSelector,useDispatch } from 'react-redux';
-import {LinkContainer} from 'react-router-bootstrap'
+import { useSelector, useDispatch } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { useLogoutMutation } from '../../Slices/UsersApiSlice';
 import { logout } from '../../Slices/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 
-
 const Header = () => {
-  const {userInfo} = useSelector((state)=> state.auth)
+  const { userInfo } = useSelector((state) => state.auth)  // Add a default empty object in case state.auth is undefined
+  const {adminInfo} = useSelector((state)=>state.admin)
+console.log(adminInfo,'hksddgfkhadgsdhkf');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
+  const [logoutApiCall] = useLogoutMutation();
 
-  const[logoutApiCall]=useLogoutMutation()
-
-  const logoutHandler=async()=>{
+  const logoutHandler = async () => {
     try {
-      await logoutApiCall().unwrap()
-      dispatch(logout())
-      navigate();
-    } catch (error) {
+      await logoutApiCall().unwrap();
       
+
+      dispatch(logout());
+      navigate('/');
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   return (
     <header>
@@ -51,20 +54,20 @@ const Header = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                 </>
-              ) : (
-                <>
-                  <LinkContainer to='/login'>
-                    <Nav.Link>
-                      <FaSignInAlt /> Sign In
-                    </Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to='/register'>
-                    <Nav.Link>
-                      <FaSignOutAlt /> Sign Up
-                    </Nav.Link>
-                  </LinkContainer>
-                </>
-                )}
+              ) :(
+                  <>
+                    <LinkContainer to='/login'>
+                      <Nav.Link>
+                        <FaSignInAlt /> Sign In
+                      </Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to='/register'>
+                      <Nav.Link>
+                        <FaSignOutAlt /> Sign Up
+                      </Nav.Link>
+                    </LinkContainer>
+                  </>
+                  )}
               
             
             </Nav>

@@ -78,7 +78,7 @@ if(user.matchPasswords(password)){
 //@access public
 
 const logoutUser= asyncHandler(async (req,res)=>{
-   
+ 
    
     res.status(200).json({message:'User logged out'})
 })
