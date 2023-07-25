@@ -30,18 +30,7 @@ const Hero = () => {
             
           </div>
         </Card>
-        {userInfo ? (
-          <>
-          {Array.isArray(userInfo.photo) && userInfo.photo.length > 0 ? (
-              <img src={`server/Backend/uploads/${userInfo.photo[0]}`} alt='kk'/>
-            ) : (
-              <h1>no image</h1>
-            )}
-          </>):(
-            <>
-            <h1>no image</h1>
-            </>
-          )}
+       
       </Container>
     </div>
   );

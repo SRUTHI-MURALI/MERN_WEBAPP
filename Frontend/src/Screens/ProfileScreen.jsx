@@ -6,14 +6,18 @@ import FormContainer from '../components/FormContainer/FormContainer'
 import {toast} from 'react-toastify'
 import { useUpdateUserMutation } from '../Slices/UsersApiSlice'
 import Loader from '../components/Loader/Loader'
+import { setCredentials } from '../Slices/AuthSlice'
 
 
 const ProfileScreen=()=> {
+    const {userInfo} = useSelector((state)=> state.auth)
     const [name,setName]=useState('')
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const [confirmPassword,setConfirmPassword]=useState('')
-    const [photo, setPhoto] = useState('');
+    const [photo, setPhoto] = useState(null);
+    const dispatch=useDispatch()
+
     const handleChange=(e)=> {
         const file=e.target.files[0]
         if(file){
@@ -24,13 +28,15 @@ const ProfileScreen=()=> {
 
     const [updateUser, {isLoading} ]=useUpdateUserMutation()
 
-    const {userInfo} = useSelector((state)=> state.auth)
-
+   
     useEffect(()=>{
+        
         setName(userInfo.name)
         setEmail(userInfo.email)
         setPhoto(userInfo.photo)
     },[userInfo])
+
+   
 
     const submitHandler= async(e)=>{
     
@@ -47,8 +53,10 @@ const ProfileScreen=()=> {
                 formData.append('password', password);
                 formData.append('photo', photo);
                 const res = await updateUser(formData).unwrap();
-              
+                dispatch(setCredentials({ ...userInfo, name,email}));
+               
                toast.success('Profile updated')
+
             } catch (err) {
                 toast.error(err?.data?.message || err.message);
             }
@@ -56,6 +64,7 @@ const ProfileScreen=()=> {
     }
   return (
     <FormContainer >
+        
         <h1>Update Profile</h1>
         <Form onSubmit={submitHandler} encType='multipart/form-data'>
             <Form.Group className='my-2' controlId='name'>
@@ -67,7 +76,6 @@ const ProfileScreen=()=> {
                 onChange={(e)=> setName(e.target.value)}
                 ></Form.Control>
             </Form.Group>
-            
 
             <Form.Group className='my-2' controlId='email'>
                 <Form.Label>Email Address</Form.Label>

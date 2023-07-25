@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-
+import { InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { FormControl } from 'react-bootstrap';
 
 function AdminHomeScreen() {
   
   const [users, setUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   
-useEffect(()=>{
-  const submitHandler = async (e) => {
-   
+  useEffect(()=>{
+    const submitHandler = async (e) => {
     try {
       const res = await axios.get('/api/admin/userData'); 
       setUsers(res.data); 
@@ -24,6 +25,10 @@ useEffect(()=>{
   submitHandler()
 },[])
 
+const handleSearch = (e) => {
+  setSearchQuery(e.target.value);
+};
+
 const deleteHandler= async (userid)=>{
  
  await axios.delete(`/api/admin/deleteUser/${userid}`)
@@ -31,12 +36,20 @@ const deleteHandler= async (userid)=>{
    
   }
 
-
- 
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
-      
+      <InputGroup className="mb-5">
+        <FormControl
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+        
+        </InputGroup>
       <Table striped bordered hover>
       <thead>
         <tr>
@@ -47,16 +60,20 @@ const deleteHandler= async (userid)=>{
         </tr>
       </thead>
       <tbody>
-      {users.map((user,index) => (
-        <tr key={user._id}>
-          <td>{index+1}</td>
-          <td>{user.name}</td>
-          <td>{user.email} </td>
-          <td><button className='btn btn-danger' onClick={()=>deleteHandler(user._id)}>Delete</button></td>
-          <td><button className='btn btn-primary'>Update</button></td>
-        </tr>
-        ))}
+          {filteredUsers.map((user, index) => (
+            <tr key={user._id}>
+              <td>{index + 1}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <button className='btn btn-danger' onClick={() => deleteHandler(user._id)}>Delete</button>
+                
+              </td>
+              <td><button className='btn btn-primary'>Update</button></td>
+            </tr>
+          ))}
         </tbody>
+        
     </Table>
     </div>
   );

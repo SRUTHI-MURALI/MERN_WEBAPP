@@ -47,14 +47,14 @@ const registerUser= asyncHandler(async (req,res)=>{
 const authUser= asyncHandler(async (req,res)=>{
    const { email,password}= req.body
    const user=await User.findOne({email})
-   console.log("haaaikkkk");
+   
 if(user.matchPasswords(password)){
     console.log('password');
 }
    if(user && (await user.matchPasswords(password))){
     
     const token = generateToken(user._id)
-    console.log(token,'kkkk');
+    
     res.status(201).json({
         _id:user._id,
         name:user.name,
@@ -62,7 +62,7 @@ if(user.matchPasswords(password)){
         photo:user.photo,
         token
     })
-    console.log(user,'haaaaaa');
+   
     
 }else{
     res.status(400)
@@ -78,8 +78,6 @@ if(user.matchPasswords(password)){
 //@access public
 
 const logoutUser= asyncHandler(async (req,res)=>{
- 
-   
     res.status(200).json({message:'User logged out'})
 })
 
@@ -89,7 +87,9 @@ const logoutUser= asyncHandler(async (req,res)=>{
 
 const getUserProfile= asyncHandler(async (req,res)=>{
     const user = await User.findById(req.user._id)
+    console.log(user.photo,'kkkkkkk');
     res.status(200).json(user)
+    
 })
 
 // Update user profile
@@ -113,7 +113,7 @@ const updateUserProfile= asyncHandler(async (req,res)=>{
             new_image= req.body.photo;
         }
        
-    console.log(new_image,'ffffffff');
+    
       } catch (error) {
         console.log(error);
       }

@@ -17,8 +17,8 @@ const adminSlice = createSlice({
     setAdminCredentials: (state, action) => {
       state.adminInfo = action.payload;
       let token = action.payload?.token;
-console.log( state.adminInfo ,'vvvvvvvvvv');
-      localStorage.setItem('adminInfo', JSON.stringify(action.payload));
+
+      localStorage.setItem('token', JSON.stringify(token));
       
     },
     adminLogout: (state, action) => {

@@ -8,9 +8,9 @@ import { logout } from '../../Slices/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const { userInfo } = useSelector((state) => state.auth)  // Add a default empty object in case state.auth is undefined
-  const {adminInfo} = useSelector((state)=>state.admin)
-console.log(adminInfo,'hksddgfkhadgsdhkf');
+  const { userInfo } = useSelector((state) => state.auth)  
+  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,8 +19,6 @@ console.log(adminInfo,'hksddgfkhadgsdhkf');
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
-      
-
       dispatch(logout());
       navigate('/');
     } catch (error) {
