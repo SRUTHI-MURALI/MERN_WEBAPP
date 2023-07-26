@@ -4,6 +4,7 @@ import { InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function AdminHomeScreen() {
   
@@ -50,6 +51,9 @@ const deleteHandler= async (userid)=>{
         />
         
         </InputGroup>
+    <InputGroup className='mb-5'><Link to={'/addUser'}><button className='btn btn-primary' >
+      Add User</button></Link></InputGroup>
+        
       <Table striped bordered hover>
       <thead>
         <tr>
@@ -69,7 +73,7 @@ const deleteHandler= async (userid)=>{
                 <button className='btn btn-danger' onClick={() => deleteHandler(user._id)}>Delete</button>
                 
               </td>
-              <td><button className='btn btn-primary'>Update</button></td>
+             
             </tr>
           ))}
         </tbody>

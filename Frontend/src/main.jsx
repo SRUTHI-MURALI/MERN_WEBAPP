@@ -13,6 +13,7 @@ import PrivateRoute from './components/Private/PrivateRoute.jsx'
 import ProfileScreen from './Screens/ProfileScreen.jsx'
 import AdminLogin from './Screens/Admin/adminLoginScreen.jsx'
 import AdminHomeScreen from './Screens/Admin/adminHomeScreen.jsx'
+import AdduserScreen from './Screens/Admin/adduserScreen.jsx'
 
 const router= createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router= createBrowserRouter(
       </Route>
       <Route  path='/adminLogin' element={<AdminLogin/>}/>
       <Route  path='/adminHome' element={<AdminHomeScreen/>}/>
-   
+      <Route path='/addUser' element={<AdduserScreen/>}/>
     </Route>
    
     </> 
